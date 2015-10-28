@@ -57,25 +57,25 @@ var showAnswerer = function (answerer) {
 
 	// set the answerer name link
 	var inspirator = result.find('.answerer-name');
-	inspirator.html('<a target="_blank" href=http://stackoverflow.com/users/' + answerer.owner.user_id + ' >' +
-						answerer.owner.display_name + '</a>'
+	inspirator.html('<a target="_blank" href=http://stackoverflow.com/users/' + answerer.user.user_id + ' >' +
+						answerer.user.display_name + '</a>'
 	);
 
 	// set the reputaion points of the answerer
 	var reputationPts = result.find('.answerer-reputation');
-	reputationPts.text(answerer.owner.reputation);
+	reputationPts.text(answerer.user.reputation);
 
 	// set the answerer accept rate
 	var acceptRate = result.find('.answerer-accept-rate');
-	acceptRate.text(answerer.owner.accept_rate);
+	acceptRate.text(answerer.user.accept_rate);
 
 	// set the answerer post counts
 	var postCount = result.find('.answerer-posts');
-	postCount.text(answerer.owner.post_count);
+	postCount.text(answerer.post_count);
 
 	// set the answerer scoring
 	var scoring = result.find('.answerer-score');
-	scoring.text(answerer.owner.score);
+	scoring.text(answerer.score);
 
 	return result;
 }
@@ -137,7 +137,7 @@ var getTopAnswerers = function (tagName) {
 				   period: 'all_time'
 				   };
 	var result = $.ajax({
-		url: "http://api.stackexchange.com/2.2/tags/top-answerers",
+		url: "http://api.stackexchange.com/2.2/tags/"+request.tag+"/top-answerers/"+request.period,
 		data: request,
 		dataType: "jsonp",
 		type: "GET"
@@ -159,28 +159,5 @@ var getTopAnswerers = function (tagName) {
 	});
 };
 
-/* Notes
-{
-  "items": [],
-  "has_more": false,
-  "quota_max": 10000,
-  "quota_remaining": 9982
-}
 
-Endpoint ~ /2.2/tags/{tag}/top-answerers/all_time?site=stackoverflow
-
-{
-  "user": {
-    "reputation": 9001,
-    "user_id": 1,
-    "user_type": "registered",
-    "accept_rate": 55,
-    "profile_image": "https://www.gravatar.com/avatar/a007be5a61f6aa8f3e85ae2fc18dd66e?d=identicon&r=PG",
-    "display_name": "Example User",
-    "link": "http://example.stackexchange.com/users/1/example-user"
-  },
-  "post_count": 100,
-  "score": 20
-}
-*/
 
