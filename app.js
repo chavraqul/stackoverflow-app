@@ -136,13 +136,15 @@ var getTopAnswerers = function (tagName) {
 		           site: 'stackoverflow',
 				   period: 'all_time'
 				   };
-	var result = $.ajax({
+	var promise = $.ajax({
 		url: "http://api.stackexchange.com/2.2/tags/"+request.tag+"/top-answerers/"+request.period,
 		data: request,
 		dataType: "jsonp",
 		type: "GET"
-		})
-	.done(function(result){
+		});
+
+
+	promise.done(function(result){
 		console.log(result);
 		var searchResults = showSearchResults(request.tag, result.items.length);
 
@@ -153,7 +155,7 @@ var getTopAnswerers = function (tagName) {
 			$('.results').append(anwerer);
 		});
 	})
-	.fail(function(jqXHR, error, errorThrown){
+	promise.fail(function(jqXHR, error, errorThrown){
 		var errorElem = showError(error);
 		$('.search-results').append(errorElem);
 	});
